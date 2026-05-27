@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angze Li — Academic Homepage</title>
+<style>
+  :root {
+    --accent: #2D5016;
+    --accent-light: #3D6B1E;
+    --bg: #f5f5f7;
+    --card-bg: rgba(255,255,255,.45);
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --border: rgba(0,0,0,.06);
+    --border-glass: rgba(255,255,255,.7);
+    --shadow-sm: 0 1px 4px rgba(0,0,0,.03);
+    --shadow-md: 0 12px 40px rgba(0,0,0,.1);
+    --radius: 20px;
+    --max-width: 840px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, #f3f4f6 0%, #f9f9fb 30%, #f3f4f6 60%, #f9f9fb 100%);
+    color: var(--text);
+    line-height: 1.6;
+    padding-bottom: 80px;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(45,80,22,.03) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 60%, rgba(45,80,22,.02) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ── Navigation ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    padding: 16px 24px;
+    background: rgba(251,251,253,.55);
+    backdrop-filter: saturate(160%) blur(30px);
+    -webkit-backdrop-filter: saturate(160%) blur(30px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s;
+  }
+  .nav.scrolled { border-bottom-color: var(--border); }
+  .nav a {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -.01em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .nav a:hover { color: var(--accent); }
+
+  /* ── Container ── */
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ── Section ── */
+  section {
+    padding: 72px 0;
+  }
+  section + section {
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 36px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 80px 0 56px;
+  }
+  .hero-inner {
+    display: flex;
+    gap: 48px;
+    align-items: flex-start;
+  }
+  .hero-text { flex: 1; }
+  .hero-name {
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: -.03em;
+    line-height: 1.1;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .hero-name-cn {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: .08em;
+    margin-left: 16px;
+  }
+  .hero-title {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: -.01em;
+    margin-bottom: 6px;
+  }
+  .hero-affiliation {
+    font-size: 17px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+  }
+  .hero-bio {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 580px;
+    text-align: justify;
+  }
+  .hero-bio p + p { margin-top: 18px; }
+
+  .hero-photo {
+    flex-shrink: 0;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #e8ebe4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,.1), 0 0 0 4px rgba(255,255,255,.5);
+  }
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── Research Interests Tags ── */
+  .interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .interest-tag {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--accent);
+    background: rgba(45,80,22,.08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 8px 18px;
+    border-radius: 22px;
+    letter-spacing: -.01em;
+    border: 1px solid rgba(45,80,22,.1);
+  }
+
+  /* ── Publication Cards ── */
+  .pub-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(30px) saturate(160%);
+    -webkit-backdrop-filter: blur(30px) saturate(160%);
+    border-radius: var(--radius);
+    padding: 26px 34px;
+    box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.65);
+    border: 1px solid var(--border);
+    transition: box-shadow .4s, transform .4s;
+    display: flex;
+    gap: 26px;
+    align-items: flex-start;
+  }
+  .pub-card:hover {
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.65);
+    transform: translateY(-3px);
+  }
+  .pub-card + .pub-card { margin-top: 16px; }
+
+  .pub-num {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #e8ebe4;
+    color: var(--accent);
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pub-content { flex: 1; min-width: 0; }
+  .pub-authors {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .pub-authors .self { font-weight: 600; color: var(--accent); }
+  .pub-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 5px 0;
+    line-height: 1.4;
+  }
+  .pub-venue {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .pub-venue em { font-style: italic; }
+  .pub-doi {
+    margin-top: 8px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    word-break: break-all;
+  }
+  .pub-doi a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .2s;
+  }
+  .pub-doi a:hover { color: var(--accent-light); }
+  .pub-type {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    background: #f5f5f7;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-left: 8px;
+  }
+
+  /* ── Education Timeline ── */
+  .edu-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(30px) saturate(160%);
+    -webkit-backdrop-filter: blur(30px) saturate(160%);
+    border-radius: var(--radius);
+    padding: 26px 34px;
+    box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.65);
+    border: 1px solid var(--border);
+    transition: box-shadow .4s, transform .4s;
+    display: flex;
+    gap: 26px;
+    align-items: flex-start;
+  }
+  .edu-card:hover {
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.65);
+    transform: translateY(-3px);
+  }
+  .edu-card + .edu-card { margin-top: 16px; }
+
+  .edu-year {
+    flex-shrink: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    min-width: 110px;
+  }
+  .edu-info { flex: 1; }
+  .edu-degree {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  .edu-school {
+    font-size: 17px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+  }
+  .edu-detail {
+    margin-top: 8px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ── Contact ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .contact-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(30px) saturate(160%);
+    -webkit-backdrop-filter: blur(30px) saturate(160%);
+    border-radius: var(--radius);
+    padding: 26px;
+    box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.65);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    transition: box-shadow .4s, transform .4s;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .contact-card:hover {
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.65);
+    transform: translateY(-3px);
+  }
+  .contact-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-icon.email { background: #e8f0fe; color: #1a73e8; }
+  .contact-icon.scholar { background: #e8ebe4; color: var(--accent); }
+  .contact-icon.orcid { background: #e8f5e0; color: #a6ce39; }
+  .contact-icon.location { background: #e8ebe4; color: var(--accent); }
+  .contact-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .contact-value {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.3;
+    word-break: break-all;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 640px) {
+    .nav { gap: 22px; padding: 12px 16px; }
+    .nav a { font-size: 14px; }
+    section { padding: 48px 0; }
+    .section-label { font-size: 13px; margin-bottom: 28px; }
+    .hero { padding: 48px 0 32px; }
+    .hero-inner { flex-direction: column-reverse; gap: 24px; }
+    .hero-name { font-size: 40px; }
+    .hero-name-cn { font-size: 22px; }
+    .hero-title { font-size: 19px; }
+    .hero-bio { font-size: 17px; }
+    .hero-photo { width: 110px; height: 110px; }
+    .pub-card, .edu-card { padding: 22px 20px; }
+    .pub-card { flex-direction: column; gap: 12px; }
+    .pub-num { width: 30px; height: 30px; font-size: 14px; }
+    .pub-authors { font-size: 15px; }
+    .pub-title { font-size: 16px; }
+    .pub-venue { font-size: 15px; }
+    .pub-doi { font-size: 14px; }
+    .edu-year { min-width: 90px; font-size: 15px; }
+    .edu-degree { font-size: 17px; }
+    .edu-school { font-size: 15px; }
+    .edu-detail { font-size: 15px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-label, .contact-value { font-size: 14px; }
+    .interest-tag { font-size: 14px; padding: 6px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="navbar">
+  <a href="#about">About</a>
+  <a href="#education">Education</a>
+  <a href="#journals">Journals</a>
+  <a href="#conferences">Conferences</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<!-- About / Hero -->
+<section class="hero" id="about">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1 class="hero-name">Angze Li<span class="hero-name-cn">李昂泽</span></h1>
+        <p class="hero-title">Ph.D. Candidate in Communication</p>
+        <p class="hero-affiliation">Faculty of Social Sciences, University of Macau</p>
+        <div class="hero-bio">
+          <p>
+            I am a researcher in digital journalism and media transformation, with a focus on
+            journalistic role performance, international communication, and social media influencers.
+            My doctoral research examined CCTV journo-influencers' performativity in the digital era,
+            exploring the intersection of personal, professional, and political performances
+            on social media platforms.
+          </p>
+          <p>
+            My work employs qualitative methods to investigate how journalistic practices evolve
+            in China's changing media landscape, engaging with critical media studies, platform
+            studies, and cross-cultural communication.
+          </p>
+        </div>
+        <div class="interests">
+          <span class="interest-tag">Digital Journalism</span>
+          <span class="interest-tag">Media Transformation in China</span>
+          <span class="interest-tag">Journalistic Role Performance</span>
+          <span class="interest-tag">International Communication</span>
+          <span class="interest-tag">Social Media Influencers</span>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=1Q_21iYAAAAJ" alt="Angze Li">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Education -->
+<section id="education">
+  <div class="container">
+    <div class="section-label">Education</div>
+
+    <div class="edu-card">
+      <div class="edu-year">2022 – 2026</div>
+      <div class="edu-info">
+        <div class="edu-degree">Ph.D. in Communication</div>
+        <div class="edu-school">University of Macau, Macau SAR, China</div>
+        <div class="edu-detail">
+          Dissertation: <em>Personal, Professional, and Political Performances: CCTV Journo-Influencers' Performativity in the Digital Era</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-year">2019 – 2022</div>
+      <div class="edu-info">
+        <div class="edu-degree">M.A. in Journalism and Communication</div>
+        <div class="edu-school">Nanjing Normal University, Nanjing, Jiangsu, China</div>
+      </div>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-year">2015 – 2019</div>
+      <div class="edu-info">
+        <div class="edu-degree">B.A. in Broadcast Television Directing</div>
+        <div class="edu-school">Jiangxi Normal University, Nanchang, Jiangxi, China</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Journal Publications -->
+<section id="journals">
+  <div class="container">
+    <div class="section-label">Journal Articles</div>
+
+    <div class="pub-card">
+      <div class="pub-num">1</div>
+      <div class="pub-content">
+        <div class="pub-authors">Yan, Z., <span class="self">Li, A.</span>, &amp; Wang, H. (2026).</div>
+        <div class="pub-title">Weaponizing Emotion: Chinese Communist Youth League's Soft Propaganda on Douyin.</div>
+        <div class="pub-venue"><em>Asian Journal of Communication</em>, 1–16.</div>
+        <div class="pub-doi">DOI: <a href="https://doi.org/10.1080/01292986.2025.2612172" target="_blank">https://doi.org/10.1080/01292986.2025.2612172</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">2</div>
+      <div class="pub-content">
+        <div class="pub-authors">Wang, H., &amp; <span class="self">Li, A.</span> (2024).</div>
+        <div class="pub-title">A Watchdog That No Longer Barks: Role Performance of Investigative Journalism in China in the Digital Age.</div>
+        <div class="pub-venue"><em>Journalism Practice</em>, 18(9), 2240–2257.</div>
+        <div class="pub-doi">DOI: <a href="https://doi.org/10.1080/17512786.2024.2308530" target="_blank">https://doi.org/10.1080/17512786.2024.2308530</a></div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">3</div>
+      <div class="pub-content">
+        <div class="pub-authors"><span class="self">Li, A.</span>, &amp; Wang, H. (2024).</div>
+        <div class="pub-title">The Currency of Truth: Newsmaking and the Late-Socialist Imaginaries of China's Digital Era.<span class="pub-type">Book Review</span></div>
+        <div class="pub-venue"><em>Asian Journal of Social Science</em>, 52(3), 148–149.</div>
+        <div class="pub-doi">DOI: <a href="https://doi.org/10.1016/j.ajss.2024.06.003" target="_blank">https://doi.org/10.1016/j.ajss.2024.06.003</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Conference Publications -->
+<section id="conferences">
+  <div class="container">
+    <div class="section-label">Conference Papers</div>
+
+    <div class="pub-card">
+      <div class="pub-num">1</div>
+      <div class="pub-content">
+        <div class="pub-authors"><span class="self">Li, A.</span> (2025).</div>
+        <div class="pub-title">Balancing Personal Branding and Professional Ideas: A Case Study of Influencers' Performative Practices on Social Media in China.</div>
+        <div class="pub-venue">Paper presented at the 11th Journalism Studies PhD Colloquium, ICA Journalism Studies Division, Denver, CO, USA.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">2</div>
+      <div class="pub-content">
+        <div class="pub-authors">Yan, Z., <span class="self">Li, A.</span>, &amp; Wang, H. (2025).</div>
+        <div class="pub-title">Emotional Governance in Digital Authoritarianism: Online Practices of the Chinese Communist Youth League on Douyin.</div>
+        <div class="pub-venue">Paper presented at the 75th Annual Conference of the International Communication Association (ICA), Denver, CO, USA.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">3</div>
+      <div class="pub-content">
+        <div class="pub-authors">Wang, H., <span class="self">Li, A.</span>, &amp; Meng, J. (2024).</div>
+        <div class="pub-title">Representation of Women in Journalism Textbooks in China.</div>
+        <div class="pub-venue">Paper presented at the 107th Annual AEJMC Conference, Philadelphia, PA, USA.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">4</div>
+      <div class="pub-content">
+        <div class="pub-authors">Wang, H., &amp; <span class="self">Li, A.</span> (2024).</div>
+        <div class="pub-title">Elephant Did a Street Dance: Role Performance of Chinese Party Media News Anchors on Social Media Platforms.</div>
+        <div class="pub-venue">Paper presented at the ICA Preconference: Journalistic Role Performance — Paths Taken and Pathways Forward, Gold Coast, Australia.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">5</div>
+      <div class="pub-content">
+        <div class="pub-authors">Wang, H., &amp; <span class="self">Li, A.</span> (2024).</div>
+        <div class="pub-title">A Watchdog That No Longer Barks: Investigative Journalism in China During Changing Times.</div>
+        <div class="pub-venue">Paper presented at the 74th Annual ICA Conference, Gold Coast, Australia.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">6</div>
+      <div class="pub-content">
+        <div class="pub-authors"><span class="self">Li, A.</span>, &amp; Zhong, Y. (2022).</div>
+        <div class="pub-title">Is YouTube's Video Takedown a Sign of Platform Hegemony? A Study of Gatekeepers in Digital News Video Censorship.</div>
+        <div class="pub-venue">Paper presented at the ICA Pre-Conference: From International News Flows to the Platformization of Journalism, Paris, France.</div>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <div class="pub-num">7</div>
+      <div class="pub-content">
+        <div class="pub-authors">Zhong, Y., &amp; <span class="self">Li, A.</span> (2022).</div>
+        <div class="pub-title">Patients as Actors: Life Narrative Writing and Visibility Construction of Individual Memory.</div>
+        <div class="pub-venue">Paper presented at the IAMCR 2022 Conference, Beijing, China.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+
+    <div class="contact-grid">
+      <a class="contact-card" href="mailto:yc27307@connect.um.edu.mo">
+        <div class="contact-icon email">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">yc27307@connect.um.edu.mo</div>
+        </div>
+      </a>
+
+      <a class="contact-card" href="https://scholar.google.com/citations?user=1Q_21iYAAAAJ&hl=en" target="_blank">
+        <div class="contact-icon scholar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769 0 9.5 12 0l12 9.5-5.242 4.269C17.548 18.327 12 22 12 22s-5.548-3.673-6.758-8.231Z"/><path d="M12 22V11"/><circle cx="5.5" cy="10" r="2.5" fill="#fff"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Google Scholar</div>
+          <div class="contact-value">Scholar Profile</div>
+        </div>
+      </a>
+
+      <a class="contact-card" href="https://orcid.org/0009-0001-0511-4512" target="_blank">
+        <div class="contact-icon orcid">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0ZM7.369 4.378c.525 0 .947.431.947.956s-.422.956-.947.956a.95.95 0 0 1-.947-.956c0-.525.422-.956.947-.956Zm-.722 3.038h1.444v10H6.647v-10Zm3.562 0h3.9c2.5 0 4.5 1.5 4.5 4.5s-2 4.5-4.5 4.5h-1.9v-1h1.9c1.8 0 3.5-1.1 3.5-3.5s-1.7-3.5-3.5-3.5h-1.9v8h-1v-9Z"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">ORCID</div>
+          <div class="contact-value">0009-0001-0511-4512</div>
+        </div>
+      </a>
+
+      <div class="contact-card">
+        <div class="contact-icon location">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Address</div>
+          <div class="contact-value">E21B-2015, University of Macau, Taipa, Macao</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+
+</body>
+</html>
